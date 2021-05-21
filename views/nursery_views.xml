@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    Plant form-->
+    <record id="nursery_plant_view_form" model="ir.ui.view">
+        <field name="name">nursery.plant.view.form</field>
+        <field name="model">nursery.plant</field>
+        <field name="arch" type="xml">
+            <form string="Plant">
+                <sheet>
+                    <group>
+                        <group>
+                            <h1>
+                                <field name="name" placeholder="Plant Name"/>
+                            </h1>
+                        </group>
+                        <group>
+                            <field name="image" widget="image"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="shop">
+                            <group>
+                                <group>
+                                    <field name="price"/>
+                                    <field name="order_count"/>
+                                    <field name="number_in_stock"/>
+                                </group>
+
+                            </group>
+                        </page>
+                        <page string="Orders">
+                            <field name="order_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    Plant Kanban-->
+    <record id="nursery_plant_view_kanban" model="ir.ui.view">
+        <field name="name">nursery.plant.view.kanban</field>
+        <field name="model">nursery.plant</field>
+        <field name="arch" type="xml">
+            <kanban string="Plant Order">
+                <field name="id"/>
+                <field name="image"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('nursery.plant', 'image', record.id.raw_value)"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+                                <ui>
+                                    <li>
+                                        <strong>Price:
+                                            <field name="price"/>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        <strong>Available Stock:
+                                        <field name="number_in_stock"/>
+                                        </strong>
+                                    </li>
+                                </ui>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!--    Customer form-->
+    <record id="nursery_customer_view_form" model="ir.ui.view">
+        <field name="name">nursery.customer.view.form</field>
+        <field name="model">nursery.customer</field>
+        <field name="arch" type="xml">
+            <form string="Customer">
+                <sheet>
+                    <h1>
+                        <field name="name" placeholder="Customer Name"/>
+                    </h1>
+                    <notebook>
+                        <page string="General Info">
+                            <group>
+                                <field name="email"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--The Actions-->
+    <record model="ir.actions.act_window" id="action_nursery_plant">
+        <field name="name">Plants</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">nursery.plant</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <menuitem name="Plant Nursery" id="nursery_root_menu"/>
+    <menuitem name="Plants" id="nursery_plant_menu"
+              parent="nursery_root_menu"
+              action="action_nursery_plant"
+              sequence="1"/>
+
+    <record model="ir.actions.act_window" id="action_nursery_customer">
+        <field name="name">Customers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">nursery.customer</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Customers" id="nursery_customer_menu"
+              parent="nursery_root_menu"
+              action="action_nursery_customer"
+              sequence="2"/>
+
+    <!--    Orders form-->
+    <record id="nursery_order_form" model="ir.ui.view">
+        <field name="name">Order Form View</field>
+        <field name="model">nursery.order</field>
+        <field name="arch" type="xml">
+            <form string="Plant Order">
+                <header>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <group col="4">
+                        <group colspan="2">
+                            <field name="plant_id"/>
+                            <field name="customer_id"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="last_modification"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!--The Actions-->
+    <record model="ir.actions.act_window" id="action_nursery_order">
+        <field name="name">Orders</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">nursery.order</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <menuitem name="Orders" id="nursery_order_menu" parent="nursery_root_menu"
+              sequence="3" action="action_nursery_order"/>
+
+
+</odoo>
