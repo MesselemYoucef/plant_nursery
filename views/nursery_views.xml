@@ -65,7 +65,7 @@
                                     </li>
                                     <li>
                                         <strong>Available Stock:
-                                        <field name="number_in_stock"/>
+                                            <field name="number_in_stock"/>
                                         </strong>
                                     </li>
                                 </ui>
@@ -146,6 +146,43 @@
                     </group>
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <!--    Order Kanban-->
+    <record id="nursery_order_view_kanban" model="ir.ui.view">
+        <field name="name">nursery.order.view.kanban</field>
+        <field name="model">nursery.order</field>
+        <field name="arch" type="xml">
+            <kanban string="Plant Order">
+                <field name="id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+<!--                            <div class="o_kanban_image">-->
+<!--                                <img t-att-src="kanban_image('nursery.order', 'image', record.id.raw_value)"/>-->
+<!--                            </div>-->
+                            <div class="oe_kanban_details">
+                                <strong>
+                                    <field name="plant_id"/>
+                                </strong>
+                                <ui>
+                                    <li>
+                                        <strong>Customer:
+                                            <field name="customer_id"/>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        <strong>Last Modification:
+                                            <field name="last_modification"/>
+                                        </strong>
+                                    </li>
+                                </ui>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 
