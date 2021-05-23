@@ -47,6 +47,8 @@ class Order(models.Model):
     ], default="draft")
     last_modification = fields.Datetime(readonly=True)
 
+
+# some of the ORM operations
     def write(self, values):
         # helper to "YYYY-MM-DD"
         values["last_modification"] = fields.Datetime.now()
